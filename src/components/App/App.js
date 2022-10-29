@@ -160,6 +160,7 @@ export default class App extends Component {
         isHidden: complitedMod,
         time: Date.now(),
         sec: 0,
+        timer: undefined,
       },
     ];
     this.setState({ items: newItems });
@@ -185,7 +186,7 @@ export default class App extends Component {
       if (item.id === id && !item.timer) {
         item.timer = setInterval(() => {
           item.sec++;
-          this.setState({ items: newItems });
+          this.setState({ item });
         }, 1000);
       }
     });
@@ -198,6 +199,7 @@ export default class App extends Component {
     newItems.forEach((item) => {
       if (item.id === id) {
         item.timer = clearInterval(item.timer);
+        this.setState({ items });
       }
     });
     this.setState({ items: newItems });
