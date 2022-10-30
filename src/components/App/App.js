@@ -62,7 +62,6 @@ export default class App extends Component {
     const newItems = [...items];
     newItems.forEach((item) => {
       item.timer = clearInterval(item.timer);
-      return item;
     });
     this.setState({ items: newItems });
   };
@@ -101,7 +100,6 @@ export default class App extends Component {
       if (item.complited) {
         item.timer = clearInterval(item.timer);
       }
-      return item;
     });
     newItems = newItems.filter((item) => !item.complited);
     this.setState({ items: newItems });
@@ -114,7 +112,6 @@ export default class App extends Component {
       if (item.complited === false) {
         item.isHidden = true;
       } else item.isHidden = false;
-      return item;
     });
     this.setState({ complitedMod: true });
     this.setState({ notModes: false });
@@ -128,7 +125,6 @@ export default class App extends Component {
       if (item.complited === true) {
         item.isHidden = true;
       } else item.isHidden = false;
-      return item;
     });
     this.setState({ complitedMod: false });
     this.setState({ notModes: false });
@@ -140,7 +136,6 @@ export default class App extends Component {
     const newItems = [...items];
     newItems.forEach((item) => {
       item.isHidden = false;
-      return item;
     });
     this.setState({ complitedMod: false });
     this.setState({ notModes: true });
@@ -174,7 +169,18 @@ export default class App extends Component {
       if (item.id === id) {
         item.value = newtask;
       }
-      return item;
+    });
+    this.setState({ items: newItems });
+  };
+
+  startTimer = (id) => {
+    console.log(id);
+    const { items } = this.state;
+    const newItems = [...items];
+    newItems.forEach((item) => {
+      if (item.id === id) {
+        item.sec++;
+      }
     });
     this.setState({ items: newItems });
   };
@@ -185,8 +191,7 @@ export default class App extends Component {
     newItems.forEach((item) => {
       if (item.id === id && !item.timer) {
         item.timer = setInterval(() => {
-          item.sec++;
-          this.setState({ item });
+          this.startTimer(id);
         }, 1000);
       }
     });
@@ -199,7 +204,6 @@ export default class App extends Component {
     newItems.forEach((item) => {
       if (item.id === id) {
         item.timer = clearInterval(item.timer);
-        this.setState({ items });
       }
     });
     this.setState({ items: newItems });
